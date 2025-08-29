@@ -37,8 +37,8 @@ public class Haru {
         while (true) {
             System.out.print("> ");
             String commandLine = sc.nextLine().trim();
-            String command = commandLine.substring(0, commandLine.contains(" ") ?commandLine.indexOf(" "):commandLine.length());
-            String args = commandLine.equals(command)?"":commandLine.substring(commandLine.indexOf(" ")+1);
+            String command = commandLine.substring(0, commandLine.contains(" ") ? commandLine.indexOf(" ") : commandLine.length());
+            String args = commandLine.equals(command) ? "" : commandLine.substring(commandLine.indexOf(" ") + 1);
             switch (command) {
             case "bye":
                 bye();
@@ -91,7 +91,7 @@ public class Haru {
         String formattedString = tasks[index].getFormattedTask();
         System.out.println("\t____________________________________________________________________________________");
         System.out.println("\tTask Marked as done: ");
-        System.out.println("\t\t"+formattedString);
+        System.out.println("\t\t" + formattedString);
         System.out.println("\t____________________________________________________________________________________");
     }
 
@@ -101,7 +101,7 @@ public class Haru {
         String formattedString = tasks[index].getFormattedTask();
         System.out.println("\t____________________________________________________________________________________");
         System.out.println("\tTask Marked as not done: ");
-        System.out.println("\t\t"+formattedString);
+        System.out.println("\t\t" + formattedString);
         System.out.println("\t____________________________________________________________________________________");
     }
 
