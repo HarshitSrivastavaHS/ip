@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class Haru {
 
-    String[] list;
-    int currentItemNo;
+    private Task[] tasks;
+    private int currentItemNo;
 
     Haru() {
         String logo = " \t_____                                                                        _____ \n" +
@@ -27,7 +27,7 @@ public class Haru {
                 "\n\tWhat can I do for you?\n" +
                 "\t____________________________________________________________________________________\n");
 
-        list = new String[100];
+        tasks = new Task[100];
         currentItemNo = 0;
         handleCommands();
     }
@@ -37,13 +37,20 @@ public class Haru {
         while (true) {
             System.out.print("> ");
             String commandLine = sc.nextLine().trim();
-
-            switch (commandLine) {
+            String command = commandLine.substring(0, commandLine.contains(" ") ?commandLine.indexOf(" "):commandLine.length());
+            String args = commandLine.equals(command)?"":commandLine.substring(commandLine.indexOf(" ")+1);
+            switch (command) {
             case "bye":
                 bye();
                 break;
             case "list":
                 list();
+                break;
+            case "mark":
+                listMark(args);
+                break;
+            case "unmark":
+                listUnmark(args);
                 break;
             default:
                 listAdd(commandLine);
@@ -59,21 +66,42 @@ public class Haru {
     }
 
     private void list() {
-        String listData = "";
-        String[] listCopy = Arrays.copyOf(list, currentItemNo);
+        String taskData = "";
+        Task[] tasksCopy = Arrays.copyOf(tasks, currentItemNo);
         int counter = 0;
-        for (String data : listCopy) {
-            listData += "\t" + ++counter + ". " + data + "\n";
+        for (Task data : tasksCopy) {
+            String task = data.getFormattedTask();
+            taskData += "\t" + ++counter + ". " + task + "\n";
         }
         System.out.println("\t____________________________________________________________________________________\n" +
-                (listData.equals("") ? "\t<EMPTY>\n" : listData) +
+                (tasksCopy.length == 0 ? "\t<EMPTY>\n" : taskData) +
                 "\t____________________________________________________________________________________\n");
     }
 
     private void listAdd(String data) {
-        list[currentItemNo++] = data;
+        tasks[currentItemNo++] = new Task(data, false);
         System.out.println("\t____________________________________________________________________________________");
         System.out.println("\tAdded: " + data);
+        System.out.println("\t____________________________________________________________________________________");
+    }
+
+    private void listMark(String args) {
+        int index = Integer.parseInt(args) - 1;
+        tasks[index].markDone();
+        String formattedString = tasks[index].getFormattedTask();
+        System.out.println("\t____________________________________________________________________________________");
+        System.out.println("\tTask Marked as done: ");
+        System.out.println("\t\t"+formattedString);
+        System.out.println("\t____________________________________________________________________________________");
+    }
+
+    private void listUnmark(String args) {
+        int index = Integer.parseInt(args) - 1;
+        tasks[index].unmarkDone();
+        String formattedString = tasks[index].getFormattedTask();
+        System.out.println("\t____________________________________________________________________________________");
+        System.out.println("\tTask Marked as not done: ");
+        System.out.println("\t\t"+formattedString);
         System.out.println("\t____________________________________________________________________________________");
     }
 
