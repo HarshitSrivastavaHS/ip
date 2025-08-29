@@ -1,7 +1,12 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Haru {
-    public static void main(String[] args) {
+
+    String[] list;
+    int currentItemNo;
+
+    Haru() {
         String logo = " \t_____                                                                        _____ \n" +
                 "\t( ___ )                                                                      ( ___ )\n" +
                 "\t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
@@ -22,20 +27,59 @@ public class Haru {
                 "\n\tWhat can I do for you?\n" +
                 "\t____________________________________________________________________________________\n");
 
+        list = new String[100];
+        currentItemNo = 0;
+        handleCommands();
+    }
+
+    public void handleCommands() {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.print("> ");
-            String textLine = sc.nextLine();
-            if (textLine.equals("bye")) {
-                System.out.println("\t____________________________________________________________________________________\n" +
-                        "\tBye! Have a wonderful day ahead :))\n" +
-                        "\t____________________________________________________________________________________\n");
-                System.exit(0);
-            } else {
-                System.out.println("\t____________________________________________________________________________________");
-                System.out.println("\t" + textLine);
-                System.out.println("\t____________________________________________________________________________________");
+            String commandLine = sc.nextLine().trim();
+
+            switch (commandLine) {
+            case "bye":
+                bye();
+                break;
+            case "list":
+                list();
+                break;
+            default:
+                listAdd(commandLine);
             }
         }
+    }
+
+    private void bye() {
+        System.out.println("\t____________________________________________________________________________________\n" +
+                "\tBye! Have a wonderful day ahead :))\n" +
+                "\t____________________________________________________________________________________\n");
+        System.exit(0);
+    }
+
+    private void list() {
+        String listData = "";
+        String[] listCopy = Arrays.copyOf(list, currentItemNo);
+        int counter = 0;
+        for (String data : listCopy) {
+            listData += "\t" + ++counter + ". " + data + "\n";
+        }
+        System.out.println("\t____________________________________________________________________________________\n" +
+                (listData.equals("") ? "\t<EMPTY>\n" : listData) +
+                "\t____________________________________________________________________________________\n");
+    }
+
+    private void listAdd(String data) {
+        list[currentItemNo++] = data;
+        System.out.println("\t____________________________________________________________________________________");
+        System.out.println("\tAdded: " + data);
+        System.out.println("\t____________________________________________________________________________________");
+    }
+
+    public static void main(String[] args) {
+
+        Haru chatbot = new Haru();
+
     }
 }
