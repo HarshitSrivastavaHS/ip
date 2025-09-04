@@ -1,0 +1,10 @@
+hello world
+todo assignments and quizzes
+deadline coursemology /by tomorrow
+list
+mark 2
+event sleep /from 1am /to 8am
+list
+unmark 2
+mark 3
+list
