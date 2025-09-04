@@ -3,39 +3,40 @@ import java.util.Scanner;
 
 public class Haru {
 
+    private final String LOGO = " \t _____                                                                        _____\n" +
+            "\t( ___ )                                                                      ( ___ )\n" +
+            "\t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |\n" +
+            "\t |   | __/\\\\\\________/\\\\\\____________________________________________________ |   |\n" +
+            "\t |   | __\\/\\\\\\_______\\/\\\\\\___________________________________________________ |   |\n" +
+            "\t |   | ___\\/\\\\\\_______\\/\\\\\\__________________________________________________ |   |\n" +
+            "\t |   | ____\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__/\\\\\\\\\\\\\\\\\\_____/\\\\/\\\\\\\\\\\\\\___/\\\\\\____/\\\\\\______ |   |\n" +
+            "\t |   | _____\\/\\\\\\/////////\\\\\\_\\////////\\\\\\___\\/\\\\\\/////\\\\\\_\\/\\\\\\___\\/\\\\\\_____ |   |\n" +
+            "\t |   | ______\\/\\\\\\_______\\/\\\\\\___/\\\\\\\\\\\\\\\\\\\\__\\/\\\\\\___\\///__\\/\\\\\\___\\/\\\\\\____ |   |\n" +
+            "\t |   | _______\\/\\\\\\_______\\/\\\\\\__/\\\\\\/////\\\\\\__\\/\\\\\\_________\\/\\\\\\___\\/\\\\\\___ |   |\n" +
+            "\t |   | ________\\/\\\\\\_______\\/\\\\\\_\\//\\\\\\\\\\\\\\\\/\\\\_\\/\\\\\\_________\\//\\\\\\\\\\\\\\\\\\___ |   |\n" +
+            "\t |   | _________\\///________\\///___\\////////\\//__\\///___________\\/////////___ |   |\n" +
+            "\t |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|\n" +
+            "\t(_____)                                                                      (_____)\n";
+    private final String SEPARATOR_LINE = "____________________________________________________________________________________";
+
     private Task[] tasks;
     private int currentItemNo;
 
     Haru() {
-        String logo = " \t _____                                                                        _____\n" +
-                "\t( ___ )                                                                      ( ___ )\n" +
-                "\t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |\n" +
-                "\t |   | __/\\\\\\________/\\\\\\____________________________________________________ |   |\n" +
-                "\t |   | __\\/\\\\\\_______\\/\\\\\\___________________________________________________ |   |\n" +
-                "\t |   | ___\\/\\\\\\_______\\/\\\\\\__________________________________________________ |   |\n" +
-                "\t |   | ____\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__/\\\\\\\\\\\\\\\\\\_____/\\\\/\\\\\\\\\\\\\\___/\\\\\\____/\\\\\\______ |   |\n" +
-                "\t |   | _____\\/\\\\\\/////////\\\\\\_\\////////\\\\\\___\\/\\\\\\/////\\\\\\_\\/\\\\\\___\\/\\\\\\_____ |   |\n" +
-                "\t |   | ______\\/\\\\\\_______\\/\\\\\\___/\\\\\\\\\\\\\\\\\\\\__\\/\\\\\\___\\///__\\/\\\\\\___\\/\\\\\\____ |   |\n" +
-                "\t |   | _______\\/\\\\\\_______\\/\\\\\\__/\\\\\\/////\\\\\\__\\/\\\\\\_________\\/\\\\\\___\\/\\\\\\___ |   |\n" +
-                "\t |   | ________\\/\\\\\\_______\\/\\\\\\_\\//\\\\\\\\\\\\\\\\/\\\\_\\/\\\\\\_________\\//\\\\\\\\\\\\\\\\\\___ |   |\n" +
-                "\t |   | _________\\///________\\///___\\////////\\//__\\///___________\\/////////___ |   |\n" +
-                "\t |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|\n" +
-                "\t(_____)                                                                      (_____)\n";
-        System.out.println("\t____________________________________________________________________________________\n" +
-                "\tHello I'm\n" +
-                logo +
-                "\n\tWhat can I do for you?\n" +
-                "\t____________________________________________________________________________________\n");
-
+        greet();
         tasks = new Task[100];
         currentItemNo = 0;
         handleCommands();
     }
 
-    public void handleCommands() {
+    private void greet() {
+        printFormattedReply("Hello, I'm\n"+LOGO+"\nWhat can i do for you?");
+    }
+
+    private void handleCommands() {
         Scanner sc = new Scanner(System.in);
+        System.out.print("> ");
         while (sc.hasNextLine()) {
-            System.out.print("> ");
             String commandLine = sc.nextLine().trim();
             String command = commandLine.substring(0, commandLine.contains(" ") ? commandLine.indexOf(" ") : commandLine.length());
             String args = commandLine.equals(command) ? "" : commandLine.substring(commandLine.indexOf(" ") + 1);
@@ -64,12 +65,13 @@ public class Haru {
             default:
                 listAdd(commandLine);
             }
+            System.out.print("> ");
         }
     }
 
     private void addTodo(String data) {
         tasks[currentItemNo++] = new Todo(data);
-        printFormattedReply("New Todo added:\n\t"+tasks[currentItemNo-1].getFormattedTask());
+        printFormattedReply("New Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void addDeadline(String data) {
@@ -79,12 +81,12 @@ public class Haru {
             return;
         }
         String description = data.substring(0, delimiter);
-        String deadline = data.substring(delimiter+3);
+        String deadline = data.substring(delimiter + 3);
         tasks[currentItemNo++] = new Deadline(description, deadline);
-        printFormattedReply("New Deadline added:\n\t"+tasks[currentItemNo-1].getFormattedTask());
+        printFormattedReply("New Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
-    public void addEvent(String data) {
+    private void addEvent(String data) {
         int eventStartDelimiter = data.indexOf("/from");
         int eventEndDelimiter = data.indexOf("/to");
         if (eventStartDelimiter == -1 || eventEndDelimiter == -1) {
@@ -92,15 +94,15 @@ public class Haru {
             return;
         }
         String description = data.substring(0, eventStartDelimiter);
-        String eventStartTime = data.substring(eventStartDelimiter+5, eventEndDelimiter);
-        String eventEndTime = data.substring(eventEndDelimiter+3);
+        String eventStartTime = data.substring(eventStartDelimiter + 5, eventEndDelimiter);
+        String eventEndTime = data.substring(eventEndDelimiter + 3);
 
         tasks[currentItemNo++] = new Event(description, eventStartTime, eventEndTime);
-        printFormattedReply("New Event added:\n\t" + tasks[currentItemNo-1].getFormattedTask());
+        printFormattedReply("New Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
-    public void incorrectCommandUsage(String commandTemplate) {
-        printFormattedReply("Incorrect command usage.\n\tCorrect Usage: "+commandTemplate);
+    private void incorrectCommandUsage(String commandTemplate) {
+        printFormattedReply("Incorrect command usage.\n\tCorrect Usage: " + commandTemplate);
     }
 
     private void bye() {
@@ -116,7 +118,7 @@ public class Haru {
             String task = data.getFormattedTask();
             taskData += "\t" + ++counter + ". " + task + "\n";
         }
-        printFormattedReply(tasksCopy.length == 0 ? "Your list is empty\n" : "Here is your list:\n"+taskData);
+        printFormattedReply(tasksCopy.length == 0 ? "Your list is empty\n" : "Here is your list:\n" + taskData);
     }
 
     private void listAdd(String data) {
@@ -160,24 +162,21 @@ public class Haru {
     }
 
     private void printFormattedReply(String reply) {
-        System.out.println("\t____________________________________________________________________________________");
+        System.out.println("\t"+SEPARATOR_LINE);
         System.out.println(getFormattedReply(reply));
-        System.out.println("\t____________________________________________________________________________________");
+        System.out.println("\t"+SEPARATOR_LINE);
     }
 
     private String getFormattedReply(String reply) {
         String formattedReply = "";
-        for (String line: reply.trim().split("\n")) {
+        for (String line : reply.trim().split("\n")) {
             formattedReply += "\t" + line + "\n";
         }
         return "\t" + formattedReply.trim();
     }
 
 
-
     public static void main(String[] args) {
-
         Haru chatbot = new Haru();
-
     }
 }
