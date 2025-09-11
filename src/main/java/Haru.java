@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Haru {
 
-    private final String LOGO = " \t _____                                                                        _____\n" +
+    private final static String LOGO = " \t _____                                                                        _____\n" +
             "\t( ___ )                                                                      ( ___ )\n" +
             "\t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |\n" +
             "\t |   | __/\\\\\\________/\\\\\\____________________________________________________ |   |\n" +
@@ -17,7 +17,10 @@ public class Haru {
             "\t |   | _________\\///________\\///___\\////////\\//__\\///___________\\/////////___ |   |\n" +
             "\t |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|\n" +
             "\t(_____)                                                                      (_____)\n";
-    private final String SEPARATOR_LINE = "____________________________________________________________________________________";
+    private final static String SEPARATOR_LINE = "____________________________________________________________________________________";
+    private final static String TODO_SYNTAX = "todo <description";
+    private final static String EVENT_SYNTAX = "event <description> /from <startTime> /to <end time>";
+    private final static String DEADLINE_SYNTAX = "deadline <description> /by <deadline>";
 
     private Task[] tasks;
     private int currentItemNo;
@@ -30,7 +33,7 @@ public class Haru {
     }
 
     private void greet() {
-        printFormattedReply("Hello, I'm\n"+LOGO+"\nWhat can i do for you?");
+        printFormattedReply("Hello, I'm\n" + LOGO + "\nWhat can i do for you?");
     }
 
     private void handleCommands() {
@@ -40,60 +43,72 @@ public class Haru {
             String commandLine = sc.nextLine().trim();
             String command = commandLine.substring(0, commandLine.contains(" ") ? commandLine.indexOf(" ") : commandLine.length());
             String args = commandLine.equals(command) ? "" : commandLine.substring(commandLine.indexOf(" ") + 1);
-            switch (command) {
-            case "bye":
-                bye();
-                break;
-            case "list":
-                list();
-                break;
-            case "mark":
-                listMark(args);
-                break;
-            case "unmark":
-                listUnmark(args);
-                break;
-            case "todo":
-                addTodo(args);
-                break;
-            case "deadline":
-                addDeadline(args);
-                break;
-            case "event":
-                addEvent(args);
-                break;
-            default:
-                listAdd(commandLine);
+            try {
+                switch (command) {
+                case "bye":
+                    bye();
+                    break;
+                case "list":
+                    list();
+                    break;
+                case "mark":
+                    listMark(args);
+                    break;
+                case "unmark":
+                    listUnmark(args);
+                    break;
+                case "todo":
+                    addTodo(args);
+                    break;
+                case "deadline":
+                    addDeadline(args);
+                    break;
+                case "event":
+                    addEvent(args);
+                    break;
+                default:
+                    throw new HaruException("Invalid Command. Not quite sure what you mean by \"" + commandLine + "\" O_o");
+                }
+            } catch (HaruException e) {
+                printFormattedReply("Error: " + e.getMessage());
             }
             System.out.print("> ");
         }
     }
 
-    private void addTodo(String data) {
+    private void addTodo(String data) throws HaruException {
+        if (data.trim().isEmpty()) {
+            incorrectCommandUsage(TODO_SYNTAX);
+        }
         tasks[currentItemNo++] = new Todo(data);
         printFormattedReply("New Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
-    private void addDeadline(String data) {
+    private void addDeadline(String data) throws HaruException {
         int delimiter = data.indexOf("/by");
         if (delimiter == -1) {
-            incorrectCommandUsage("deadline <description> /by <deadline>");
-            return;
+            incorrectCommandUsage(DEADLINE_SYNTAX);
         }
         String description = data.substring(0, delimiter);
+        if (description.isEmpty()) {
+            incorrectCommandUsage(DEADLINE_SYNTAX);
+        }
         String deadline = data.substring(delimiter + 3);
         tasks[currentItemNo++] = new Deadline(description, deadline);
         printFormattedReply("New Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
-    private void addEvent(String data) {
+    private void addEvent(String data) throws HaruException {
         int eventStartDelimiter = data.indexOf("/from");
         int eventEndDelimiter = data.indexOf("/to");
         if (eventStartDelimiter == -1 || eventEndDelimiter == -1) {
-            incorrectCommandUsage("event <description> /from <startTime> /to <end time>");
+            incorrectCommandUsage(EVENT_SYNTAX);
             return;
         }
-        String description = data.substring(0, eventStartDelimiter);
+        String description = data.substring(0, eventStartDelimiter).trim();
+        if (description.isEmpty()) {
+            incorrectCommandUsage(EVENT_SYNTAX);
+        }
         String eventStartTime = data.substring(eventStartDelimiter + 5, eventEndDelimiter);
         String eventEndTime = data.substring(eventEndDelimiter + 3);
 
@@ -101,8 +116,8 @@ public class Haru {
         printFormattedReply("New Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
-    private void incorrectCommandUsage(String commandTemplate) {
-        printFormattedReply("Incorrect command usage.\n\tCorrect Usage: " + commandTemplate);
+    private void incorrectCommandUsage(String commandTemplate) throws HaruException {
+        throw new HaruException("Incorrect command usage.\n\tCorrect Usage: " + commandTemplate);
     }
 
     private void bye() {
@@ -119,11 +134,6 @@ public class Haru {
             taskData += "\t" + ++counter + ". " + task + "\n";
         }
         printFormattedReply(tasksCopy.length == 0 ? "Your list is empty\n" : "Here is your list:\n" + taskData);
-    }
-
-    private void listAdd(String data) {
-        tasks[currentItemNo++] = new Task(data);
-        printFormattedReply("\tAdded: " + data);
     }
 
     private void listMark(String args) {
@@ -162,9 +172,9 @@ public class Haru {
     }
 
     private void printFormattedReply(String reply) {
-        System.out.println("\t"+SEPARATOR_LINE);
+        System.out.println("\t" + SEPARATOR_LINE);
         System.out.println(getFormattedReply(reply));
-        System.out.println("\t"+SEPARATOR_LINE);
+        System.out.println("\t" + SEPARATOR_LINE);
     }
 
     private String getFormattedReply(String reply) {
