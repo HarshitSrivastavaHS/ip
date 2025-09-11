@@ -6,6 +6,6 @@ public class Todo extends Task {
     }
 
     public String getFormattedTask() {
-        return "[T]"+super.getFormattedTask();
+        return "[T]" + super.getFormattedTask();
     }
 }

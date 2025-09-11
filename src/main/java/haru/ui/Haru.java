@@ -91,7 +91,7 @@ public class Haru {
             incorrectCommandUsage(TODO_SYNTAX);
         }
         tasks[currentItemNo++] = new Todo(data);
-        printFormattedReply("New haru.task.Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void addDeadline(String data) throws HaruException {
@@ -105,7 +105,7 @@ public class Haru {
         }
         String deadline = data.substring(delimiter + 3);
         tasks[currentItemNo++] = new Deadline(description, deadline);
-        printFormattedReply("New haru.task.Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void addEvent(String data) throws HaruException {
@@ -123,7 +123,7 @@ public class Haru {
         String eventEndTime = data.substring(eventEndDelimiter + 3);
 
         tasks[currentItemNo++] = new Event(description, eventStartTime, eventEndTime);
-        printFormattedReply("New haru.task.Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void incorrectCommandUsage(String commandTemplate) throws HaruException {
@@ -153,7 +153,7 @@ public class Haru {
         }
         tasks[index].markDone();
         String formattedString = tasks[index].getFormattedTask();
-        printFormattedReply("\tharu.task.Task Marked as done:\n\t" + formattedString);
+        printFormattedReply("\tTask Marked as done:\n\t" + formattedString);
     }
 
     private void listUnmark(String args) {
@@ -163,7 +163,7 @@ public class Haru {
         }
         tasks[index].unmarkDone();
         String formattedString = tasks[index].getFormattedTask();
-        printFormattedReply("haru.task.Task Marked as not done:\n\t" + formattedString);
+        printFormattedReply("Task Marked as not done:\n\t" + formattedString);
     }
 
     private int validateIndex(String args, String errorResponse) {

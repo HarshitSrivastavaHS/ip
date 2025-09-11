@@ -12,6 +12,6 @@ public class Event extends Task {
 
     @Override
     public String getFormattedTask() {
-        return "[E]" + super.getFormattedTask() + " (haru.task.Event from: " + this.startTime + ", to " + this.endTime + ")";
+        return "[E]" + super.getFormattedTask() + " (Event from: " + this.startTime + ", to " + this.endTime + ")";
     }
 }

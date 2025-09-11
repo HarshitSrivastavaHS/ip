@@ -10,6 +10,6 @@ public class Deadline extends Task {
 
     @Override
     public String getFormattedTask() {
-        return "[D]" + super.getFormattedTask() + " (haru.task.Deadline: " + this.deadlineTime + ")";
+        return "[D]" + super.getFormattedTask() + " (Deadline: " + this.deadlineTime + ")";
     }
 }
