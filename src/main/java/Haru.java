@@ -63,7 +63,7 @@ public class Haru {
                 addEvent(args);
                 break;
             default:
-                listAdd(commandLine);
+                printFormattedReply("Not quite sure what you mean by \""+commandLine+"\" O_o");
             }
             System.out.print("> ");
         }
