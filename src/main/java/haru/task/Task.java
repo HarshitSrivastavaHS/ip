@@ -1,8 +1,10 @@
+package haru.task;
+
 public class Task {
     private String description;
     private boolean isDone;
 
-    Task() {
+    public Task() {
         description = "";
         isDone = false;
     }

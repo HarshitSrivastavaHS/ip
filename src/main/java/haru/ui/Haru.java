@@ -1,28 +1,38 @@
+package haru.ui;
+
+import haru.exception.HaruException;
+import haru.task.Deadline;
+import haru.task.Event;
+import haru.task.Task;
+import haru.task.Todo;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Haru {
 
-    private final static String LOGO = " \t _____                                                                        _____\n" +
-            "\t( ___ )                                                                      ( ___ )\n" +
-            "\t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |\n" +
-            "\t |   | __/\\\\\\________/\\\\\\____________________________________________________ |   |\n" +
-            "\t |   | __\\/\\\\\\_______\\/\\\\\\___________________________________________________ |   |\n" +
-            "\t |   | ___\\/\\\\\\_______\\/\\\\\\__________________________________________________ |   |\n" +
-            "\t |   | ____\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__/\\\\\\\\\\\\\\\\\\_____/\\\\/\\\\\\\\\\\\\\___/\\\\\\____/\\\\\\______ |   |\n" +
-            "\t |   | _____\\/\\\\\\/////////\\\\\\_\\////////\\\\\\___\\/\\\\\\/////\\\\\\_\\/\\\\\\___\\/\\\\\\_____ |   |\n" +
-            "\t |   | ______\\/\\\\\\_______\\/\\\\\\___/\\\\\\\\\\\\\\\\\\\\__\\/\\\\\\___\\///__\\/\\\\\\___\\/\\\\\\____ |   |\n" +
-            "\t |   | _______\\/\\\\\\_______\\/\\\\\\__/\\\\\\/////\\\\\\__\\/\\\\\\_________\\/\\\\\\___\\/\\\\\\___ |   |\n" +
-            "\t |   | ________\\/\\\\\\_______\\/\\\\\\_\\//\\\\\\\\\\\\\\\\/\\\\_\\/\\\\\\_________\\//\\\\\\\\\\\\\\\\\\___ |   |\n" +
-            "\t |   | _________\\///________\\///___\\////////\\//__\\///___________\\/////////___ |   |\n" +
-            "\t |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|\n" +
-            "\t(_____)                                                                      (_____)\n";
+    private final static String LOGO = """
+             \t _____                                                                        _____
+            \t( ___ )                                                                      ( ___ )
+            \t |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |
+            \t |   | __/\\\\\\________/\\\\\\____________________________________________________ |   |
+            \t |   | __\\/\\\\\\_______\\/\\\\\\___________________________________________________ |   |
+            \t |   | ___\\/\\\\\\_______\\/\\\\\\__________________________________________________ |   |
+            \t |   | ____\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__/\\\\\\\\\\\\\\\\\\_____/\\\\/\\\\\\\\\\\\\\___/\\\\\\____/\\\\\\______ |   |
+            \t |   | _____\\/\\\\\\/////////\\\\\\_\\////////\\\\\\___\\/\\\\\\/////\\\\\\_\\/\\\\\\___\\/\\\\\\_____ |   |
+            \t |   | ______\\/\\\\\\_______\\/\\\\\\___/\\\\\\\\\\\\\\\\\\\\__\\/\\\\\\___\\///__\\/\\\\\\___\\/\\\\\\____ |   |
+            \t |   | _______\\/\\\\\\_______\\/\\\\\\__/\\\\\\/////\\\\\\__\\/\\\\\\_________\\/\\\\\\___\\/\\\\\\___ |   |
+            \t |   | ________\\/\\\\\\_______\\/\\\\\\_\\//\\\\\\\\\\\\\\\\/\\\\_\\/\\\\\\_________\\//\\\\\\\\\\\\\\\\\\___ |   |
+            \t |   | _________\\///________\\///___\\////////\\//__\\///___________\\/////////___ |   |
+            \t |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|
+            \t(_____)                                                                      (_____)
+            """;
     private final static String SEPARATOR_LINE = "____________________________________________________________________________________";
     private final static String TODO_SYNTAX = "todo <description";
     private final static String EVENT_SYNTAX = "event <description> /from <startTime> /to <end time>";
     private final static String DEADLINE_SYNTAX = "deadline <description> /by <deadline>";
 
-    private Task[] tasks;
+    private final Task[] tasks;
     private int currentItemNo;
 
     Haru() {
@@ -81,7 +91,7 @@ public class Haru {
             incorrectCommandUsage(TODO_SYNTAX);
         }
         tasks[currentItemNo++] = new Todo(data);
-        printFormattedReply("New Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New haru.task.Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void addDeadline(String data) throws HaruException {
@@ -95,7 +105,7 @@ public class Haru {
         }
         String deadline = data.substring(delimiter + 3);
         tasks[currentItemNo++] = new Deadline(description, deadline);
-        printFormattedReply("New Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New haru.task.Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void addEvent(String data) throws HaruException {
@@ -113,7 +123,7 @@ public class Haru {
         String eventEndTime = data.substring(eventEndDelimiter + 3);
 
         tasks[currentItemNo++] = new Event(description, eventStartTime, eventEndTime);
-        printFormattedReply("New Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        printFormattedReply("New haru.task.Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
     }
 
     private void incorrectCommandUsage(String commandTemplate) throws HaruException {
@@ -143,7 +153,7 @@ public class Haru {
         }
         tasks[index].markDone();
         String formattedString = tasks[index].getFormattedTask();
-        printFormattedReply("\tTask Marked as done:\n\t" + formattedString);
+        printFormattedReply("\tharu.task.Task Marked as done:\n\t" + formattedString);
     }
 
     private void listUnmark(String args) {
@@ -153,7 +163,7 @@ public class Haru {
         }
         tasks[index].unmarkDone();
         String formattedString = tasks[index].getFormattedTask();
-        printFormattedReply("Task Marked as not done:\n\t" + formattedString);
+        printFormattedReply("haru.task.Task Marked as not done:\n\t" + formattedString);
     }
 
     private int validateIndex(String args, String errorResponse) {

@@ -24,7 +24,7 @@
 	Error: Invalid Command. Not quite sure what you mean by "hello world" O_o
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	New Todo added:
+	New haru.task.Todo added:
 		[T][ ] assignments
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
@@ -32,44 +32,44 @@
 		1. [T][ ] assignments
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	New Deadline added:
-		[D][ ] coursemology  (Deadline:  tomorrow)
+	New haru.task.Deadline added:
+		[D][ ] coursemology  (haru.task.Deadline:  tomorrow)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
 	Here is your list:
 		1. [T][ ] assignments
-		2. [D][ ] coursemology  (Deadline:  tomorrow)
+		2. [D][ ] coursemology  (haru.task.Deadline:  tomorrow)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	Task Marked as done:
-		[D][X] coursemology  (Deadline:  tomorrow)
+	haru.task.Task Marked as done:
+		[D][X] coursemology  (haru.task.Deadline:  tomorrow)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	New Event added:
-		[E][ ] career fair (Event from:  someday , to  some other day)
+	New haru.task.Event added:
+		[E][ ] career fair (haru.task.Event from:  someday , to  some other day)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
 	Here is your list:
 		1. [T][ ] assignments
-		2. [D][X] coursemology  (Deadline:  tomorrow)
-		3. [E][ ] career fair (Event from:  someday , to  some other day)
+		2. [D][X] coursemology  (haru.task.Deadline:  tomorrow)
+		3. [E][ ] career fair (haru.task.Event from:  someday , to  some other day)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	Task Marked as done:
+	haru.task.Task Marked as done:
 		[T][X] assignments
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	Task Marked as done:
-		[E][X] career fair (Event from:  someday , to  some other day)
+	haru.task.Task Marked as done:
+		[E][X] career fair (haru.task.Event from:  someday , to  some other day)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
 	Here is your list:
 		1. [T][X] assignments
-		2. [D][X] coursemology  (Deadline:  tomorrow)
-		3. [E][X] career fair (Event from:  someday , to  some other day)
+		2. [D][X] coursemology  (haru.task.Deadline:  tomorrow)
+		3. [E][X] career fair (haru.task.Event from:  someday , to  some other day)
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
-	Task Marked as not done:
+	haru.task.Task Marked as not done:
 		[T][ ] assignments
 	____________________________________________________________________________________
 > 	____________________________________________________________________________________
