@@ -14,6 +14,11 @@ public class Task {
         unmarkDone();
     }
 
+    Task(String description, boolean isDone) {
+        setDescription(description);
+        this.isDone = isDone;
+    }
+
     public void markDone() {
         isDone = true;
     }
@@ -36,5 +41,9 @@ public class Task {
 
     public String getFormattedTask() {
         return "[" + (isDone ? "X" : " ") + "] " + description;
+    }
+
+    public String getSaveFormat() {
+        return this.isDone +"<|>"+ this.description;
     }
 }
