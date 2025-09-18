@@ -91,7 +91,14 @@ public class Haru {
     }
 
     private void deleteTask(String args) {
-
+        int index = validateIndex(args, "Invalid List Item");
+        if (index == -1) {
+            return;
+        }
+        Task task = tasks.get(index);
+        tasks.remove(index);
+        currentItemNo--;
+        printFormattedReply("I've removed the task:\n\t" + task.getFormattedTask());
     }
 
     private void addTodo(String data) throws HaruException {

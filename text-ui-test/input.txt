@@ -12,3 +12,6 @@ mark 3
 list
 unmark 1
 deadline is this a deadline?
+delete 8
+delete 2
+list
