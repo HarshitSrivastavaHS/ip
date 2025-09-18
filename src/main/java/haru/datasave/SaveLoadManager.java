@@ -10,8 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.SocketOption;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -19,7 +18,7 @@ public class SaveLoadManager {
     private final String SAVE_FOLDER = "HaruData";
     private final String SAVE_FILE = "savefile.txt";
 
-    public int loadData(Task[] tasks) {
+    public int loadData(ArrayList<Task> tasks) {
         File folder = new File(SAVE_FOLDER);
 
         if (!folder.exists()) {
@@ -38,15 +37,16 @@ public class SaveLoadManager {
                 String[] lineComponents = sc.nextLine().split("<\\|>");
                 switch(lineComponents[0]) {
                 case "T":
-                    tasks[i++] = new Todo(lineComponents[2], Boolean.parseBoolean(lineComponents[1]));
+                    tasks.add(new Todo(lineComponents[2], Boolean.parseBoolean(lineComponents[1])));
                     break;
                 case "E":
-                    tasks[i++] = new Event(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3], lineComponents[4]);
+                    tasks.add(new Event(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3], lineComponents[4]));
                     break;
                 case "D":
-                    tasks[i++] = new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]);;
+                    tasks.add(new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]));;
                     break;
                 }
+                i++;
             }
             return i;
         } catch (FileNotFoundException e) {

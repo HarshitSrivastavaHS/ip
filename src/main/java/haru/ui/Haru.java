@@ -6,8 +6,6 @@ import haru.task.Deadline;
 import haru.task.Event;
 import haru.task.Task;
 import haru.task.Todo;
-
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -91,7 +89,7 @@ public class Haru {
             } catch (HaruException e) {
                 printFormattedReply("Error: " + e.getMessage());
             }
-            dataManager.saveData(Arrays.copyOf(tasks, currentItemNo));
+            dataManager.saveData(tasks.toArray(Task[]::new));
             System.out.print("> ");
         }
     }
