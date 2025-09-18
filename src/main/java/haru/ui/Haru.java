@@ -7,6 +7,7 @@ import haru.task.Task;
 import haru.task.Todo;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Haru {
@@ -32,12 +33,12 @@ public class Haru {
     private final static String EVENT_SYNTAX = "event <description> /from <startTime> /to <end time>";
     private final static String DEADLINE_SYNTAX = "deadline <description> /by <deadline>";
 
-    private final Task[] tasks;
+    private final ArrayList<Task> tasks;
     private int currentItemNo;
 
     Haru() {
         greet();
-        tasks = new Task[100];
+        tasks = new ArrayList<>();
         currentItemNo = 0;
         handleCommands();
     }
@@ -76,6 +77,9 @@ public class Haru {
                 case "event":
                     addEvent(args);
                     break;
+                case "delete":
+                    deleteTask(args);
+                    break;
                 default:
                     throw new HaruException("Invalid Command. Not quite sure what you mean by \"" + commandLine + "\" O_o");
                 }
@@ -86,12 +90,17 @@ public class Haru {
         }
     }
 
+    private void deleteTask(String args) {
+
+    }
+
     private void addTodo(String data) throws HaruException {
         if (data.trim().isEmpty()) {
             incorrectCommandUsage(TODO_SYNTAX);
         }
-        tasks[currentItemNo++] = new Todo(data);
-        printFormattedReply("New Todo added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        Todo todoTask = new Todo(data);
+        tasks.add(todoTask);
+        printTaskAdd("Todo", todoTask);
     }
 
     private void addDeadline(String data) throws HaruException {
@@ -104,8 +113,9 @@ public class Haru {
             incorrectCommandUsage(DEADLINE_SYNTAX);
         }
         String deadline = data.substring(delimiter + 3);
-        tasks[currentItemNo++] = new Deadline(description, deadline);
-        printFormattedReply("New Deadline added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+        Deadline deadlineTask = new Deadline(description, deadline);
+        tasks.add(deadlineTask);
+        printTaskAdd("Deadline", deadlineTask);
     }
 
     private void addEvent(String data) throws HaruException {
@@ -121,9 +131,14 @@ public class Haru {
         }
         String eventStartTime = data.substring(eventStartDelimiter + 5, eventEndDelimiter);
         String eventEndTime = data.substring(eventEndDelimiter + 3);
+        Event eventTask = new Event(description, eventStartTime, eventEndTime);
+        tasks.add(eventTask);
+        printTaskAdd("Event", eventTask);
+    }
 
-        tasks[currentItemNo++] = new Event(description, eventStartTime, eventEndTime);
-        printFormattedReply("New Event added:\n\t" + tasks[currentItemNo - 1].getFormattedTask());
+    private void printTaskAdd(String taskType, Task data) {
+        currentItemNo++;
+        printFormattedReply("New "+taskType+" added:\n\t" + data.getFormattedTask());
     }
 
     private void incorrectCommandUsage(String commandTemplate) throws HaruException {
@@ -137,7 +152,7 @@ public class Haru {
 
     private void list() {
         String taskData = "";
-        Task[] tasksCopy = Arrays.copyOf(tasks, currentItemNo);
+        Task[] tasksCopy = tasks.toArray(Task[]::new);
         int counter = 0;
         for (Task data : tasksCopy) {
             String task = data.getFormattedTask();
@@ -151,8 +166,8 @@ public class Haru {
         if (index == -1) {
             return;
         }
-        tasks[index].markDone();
-        String formattedString = tasks[index].getFormattedTask();
+        tasks.get(index).markDone();
+        String formattedString = tasks.get(index).getFormattedTask();
         printFormattedReply("\tTask Marked as done:\n\t" + formattedString);
     }
 
@@ -161,8 +176,8 @@ public class Haru {
         if (index == -1) {
             return;
         }
-        tasks[index].unmarkDone();
-        String formattedString = tasks[index].getFormattedTask();
+        tasks.get(index).unmarkDone();
+        String formattedString = tasks.get(index).getFormattedTask();
         printFormattedReply("Task Marked as not done:\n\t" + formattedString);
     }
 
