@@ -6,6 +6,7 @@ import haru.task.Deadline;
 import haru.task.Event;
 import haru.task.Task;
 import haru.task.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,6 +37,7 @@ public class Haru {
     private int currentItemNo;
 
     private SaveLoadManager dataManager;
+
     Haru() {
         greet();
         tasks = new ArrayList<>();
@@ -54,7 +56,7 @@ public class Haru {
         Scanner sc = new Scanner(System.in);
         System.out.print("> ");
         while (sc.hasNextLine()) {
-            String commandLine = sc.nextLine().trim();
+            String commandLine = sc.nextLine().trim().replaceAll("<\\|>", "<>");
             String command = commandLine.substring(0, commandLine.contains(" ") ? commandLine.indexOf(" ") : commandLine.length());
             String args = commandLine.equals(command) ? "" : commandLine.substring(commandLine.indexOf(" ") + 1);
             try {
@@ -149,7 +151,7 @@ public class Haru {
 
     private void printTaskAdd(String taskType, Task data) {
         currentItemNo++;
-        printFormattedReply("New "+taskType+" added:\n\t" + data.getFormattedTask());
+        printFormattedReply("New " + taskType + " added:\n\t" + data.getFormattedTask());
     }
 
     private void incorrectCommandUsage(String commandTemplate) throws HaruException {

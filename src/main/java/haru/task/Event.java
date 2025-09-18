@@ -22,6 +22,6 @@ public class Event extends Task {
     }
 
     public String getSaveFormat() {
-        return "E<|>" +super.getSaveFormat() + "<|>" +startTime + "<|>" + endTime;
+        return "E<|>" + super.getSaveFormat() + "<|>" + startTime + "<|>" + endTime;
     }
 }

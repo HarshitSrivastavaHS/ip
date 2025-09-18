@@ -19,6 +19,6 @@ public class Deadline extends Task {
     }
 
     public String getSaveFormat() {
-        return "D<|>" +super.getSaveFormat() + "<|>" +deadlineTime;
+        return "D<|>" + super.getSaveFormat() + "<|>" + deadlineTime;
     }
 }

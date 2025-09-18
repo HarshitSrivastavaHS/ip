@@ -35,7 +35,7 @@ public class SaveLoadManager {
             Scanner sc = new Scanner(saveFile);
             while (sc.hasNextLine()) {
                 String[] lineComponents = sc.nextLine().split("<\\|>");
-                switch(lineComponents[0]) {
+                switch (lineComponents[0]) {
                 case "T":
                     tasks.add(new Todo(lineComponents[2], Boolean.parseBoolean(lineComponents[1])));
                     break;
@@ -43,7 +43,7 @@ public class SaveLoadManager {
                     tasks.add(new Event(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3], lineComponents[4]));
                     break;
                 case "D":
-                    tasks.add(new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]));;
+                    tasks.add(new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]));
                     break;
                 }
                 i++;
@@ -71,7 +71,7 @@ public class SaveLoadManager {
     private String getString(Task[] tasks) {
         String data = "";
 
-        for (Task task: tasks) {
+        for (Task task : tasks) {
             data += task.getSaveFormat() + "\n";
         }
 

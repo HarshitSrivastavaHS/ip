@@ -44,6 +44,6 @@ public class Task {
     }
 
     public String getSaveFormat() {
-        return this.isDone +"<|>"+ this.description;
+        return this.isDone + "<|>" + this.description;
     }
 }
