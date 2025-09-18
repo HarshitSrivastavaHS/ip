@@ -1,5 +1,6 @@
 package haru.ui;
 
+import haru.datasave.SaveLoadManager;
 import haru.exception.HaruException;
 import haru.task.Deadline;
 import haru.task.Event;
@@ -36,11 +37,15 @@ public class Haru {
     private final ArrayList<Task> tasks;
     private int currentItemNo;
 
+    private SaveLoadManager dataManager;
     Haru() {
         greet();
         tasks = new ArrayList<>();
         currentItemNo = 0;
+        dataManager = new SaveLoadManager();
+        currentItemNo = dataManager.loadData(tasks);
         handleCommands();
+
     }
 
     private void greet() {
@@ -86,6 +91,7 @@ public class Haru {
             } catch (HaruException e) {
                 printFormattedReply("Error: " + e.getMessage());
             }
+            dataManager.saveData(Arrays.copyOf(tasks, currentItemNo));
             System.out.print("> ");
         }
     }
