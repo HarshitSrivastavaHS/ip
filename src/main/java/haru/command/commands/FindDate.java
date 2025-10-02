@@ -13,14 +13,35 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a command that finds tasks scheduled on a specific date.
+ *
+ * The search supports Deadlines and Events.
+ */
 public class FindDate implements Command {
     private final String SYNTAX = "finddate <d/m/yyyy>";
     private final ArrayList<Task> tasks;
 
+    /**
+     * Constructor
+     *
+     * @param tasks the list of tasks to search within
+     */
     public FindDate(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Executes the finddate command.
+     *
+     * Validates the date format and filters:
+     *  Deadlines whose due date matches the queried date
+     *  Events that span across the queried date
+     * It then prints the matching list or a message if no match is found.
+     *
+     * @param args the date to search for, formatted as {@code d/m/yyyy}
+     * @throws HaruException never thrown in this implementation
+     */
     @Override
     public void exec(String args) throws HaruException {
         LocalDate queryDate;
