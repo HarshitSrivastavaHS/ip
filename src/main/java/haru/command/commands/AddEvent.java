@@ -9,6 +9,7 @@ import haru.task.Todo;
 import haru.ui.Ui;
 import haru.util.Counter;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class AddEvent implements Command {
@@ -36,9 +37,16 @@ public class AddEvent implements Command {
         }
         String eventStartTime = args.substring(eventStartDelimiter + 5, eventEndDelimiter);
         String eventEndTime = args.substring(eventEndDelimiter + 3);
-        Event eventTask = new Event(description, eventStartTime, eventEndTime);
-        tasks.add(eventTask);
-        currentItemCount.value++;
-        Ui.printTaskAdd("Event", eventTask);
+        try {
+            Event eventTask = new Event(description.trim(), eventStartTime, eventEndTime);
+            tasks.add(eventTask);
+            currentItemCount.value++;
+            Ui.printTaskAdd("Event", eventTask);
+        } catch (DateTimeParseException e) {
+            Ui.printFormattedReply("Invalid date/time format. Use d/m/yyyy HHmm");
+        } catch (IllegalArgumentException e) {
+            Ui.printFormattedReply(e.getMessage());
+        }
+
     }
 }

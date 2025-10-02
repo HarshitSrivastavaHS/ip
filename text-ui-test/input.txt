@@ -2,10 +2,10 @@ list
 hello world
 todo assignments
 list
-deadline coursemology /by tomorrow
+deadline final project /by 3/10/2025 2359
 list
 mark 2
-event career fair /from someday /to some other day
+event career fair /from 8/10/2025 1200 /to 9/10/2025 1800
 list
 mark 1
 mark 3
