@@ -20,7 +20,12 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin haru.ui.Haru < input.txt > ACTUAL.TXT
+java -classpath ../bin haru.Haru < input.txt > ACTUAL.TXT
+
+if [ -d "./HaruData" ]
+then
+    rm -rf ./HaruData
+fi
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
