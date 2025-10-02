@@ -15,35 +15,29 @@ Haru is a command-line task management chatbot. It lets you:
    ```bash
    javac -d bin $(find src -name "*.java")
     ```
-   
+
 ---
 
 ## 3. Commands
 
 ### Add Tasks
-| Command | Syntax | Example | Notes |
-|---------|-------|---------|-------|
-| Todo | todo <description> | todo Read book | Task without date/time |
-| Deadline | deadline <description> /by <d/m/yyyy HHmm> | deadline Submit report /by 5/10/2025 2359 | Use d/m/yyyy HHmm format |
-| Event | event <description> /from <d/m/yyyy HHmm> /to <d/m/yyyy HHmm> | event Meeting /from 5/10/2025 1400 /to 5/10/2025 1500 | Start must be before end |
+- Todo — `todo <description>` — `todo Read book` — Task without date/time 
+- Deadline — `deadline <description> /by <d/m/yyyy HHmm>` — `deadline Submit report /by 5/10/2025 2359` — Use d/m/yyyy HHmm format 
+- Event — `event <description> /from <d/m/yyyy HHmm> /to <d/m/yyyy HHmm>` — `event Meeting /from 5/10/2025 1400 /to 5/10/2025 1500` — Start must be before end 
 
 ### List Tasks
 - `list` — Shows all tasks with numbers and status.
 
 ### Mark / Unmark
-| Command | Syntax | Notes                  |
-|---------|--------|------------------------|
-| Mark | mark <task number> | Marks task as done     |
-| Unmark | unmark <task number> | Marks task as not done |
+- Mark — `mark <task number>` — Marks task as done
+- Unmark — `unmark <task number>` — Marks task as not done 
 
 ### Delete Task
 - `delete <task number>` — Removes task from the list.
 
 ### Search
-| Command | Syntax              | Notes |
-|---------|---------------------|------|
-| Find by keyword | find <keyword>      | Searches task descriptions for a match |
-| Find by date | finddate <d/m/yyyy> | Finds deadlines/events on a specific date |
+- Find by keyword — `find <keyword>` — Searches task descriptions for a match 
+- Find by date — `finddate <d/m/yyyy>`— Finds deadlines/events on a specific date 
 
 ### Exit
 - `bye` — Saves tasks and exits the program.
