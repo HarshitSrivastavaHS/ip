@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Main controller class responsible for initializing components,
+ * loading saved data, and running the chatbot event loop.
+ *
+ * This class coordinates input parsing, command execution,
+ * and saving of task data after every modification.
+ */
 public class Application {
 
     private final Scanner sc;
@@ -27,7 +34,9 @@ public class Application {
 
     private final SaveLoadManager dataManager;
 
-
+    /**
+     * Constructs the application, initializes internal components and loads saved data.
+     */
     public Application() {
         currentItemNo = new Counter(0);
         tasks = new ArrayList<>();
@@ -39,11 +48,17 @@ public class Application {
         currentItemNo.value = dataManager.loadData(tasks);
     }
 
+    /**
+     * Starts the chatbot by greeting the user and beginning the input loop.
+     */
     public void run() {
         Ui.greet();
         startChatbot();
     }
 
+    /**
+     * Continuously reads user input, processes commands, and saves data after each action.
+     */
     private void startChatbot() {
         Ui.printPrompt();
         while (sc.hasNextLine()) {
@@ -58,11 +73,20 @@ public class Application {
         }
     }
 
+    /**
+     * Waits for user input, parses it, and returns the corresponding command.
+     *
+     * @return parsed command ready for execution
+     * @throws HaruException if the input command is invalid
+     */
     private Command awaitUserInput() throws HaruException {
         String input = sc.nextLine();
         return parser.parse(input);
     }
 
+    /**
+     * Registers all supported commands in a map for quick access.
+     */
     private void initialiseCommands() {
         commands = Map.ofEntries(
                 Map.entry("list", new List(tasks)),
