@@ -73,7 +73,8 @@ public class Application {
                 Map.entry("mark", new Mark(parser, tasks)),
                 Map.entry("unmark", new Unmark(parser, tasks)),
                 Map.entry("delete", new Delete(parser, tasks, currentItemNo)),
-                Map.entry("find", new Find(tasks))
+                Map.entry("find", new Find(tasks)),
+                Map.entry("finddate", new FindDate(tasks))
         );
     }
 }

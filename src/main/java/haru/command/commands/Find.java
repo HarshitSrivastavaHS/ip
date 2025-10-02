@@ -22,7 +22,7 @@ public class Find implements Command {
             Ui.incorrectCommandUsage(SYNTAX);
         }
 
-        ArrayList<Task> filteredTasks = (ArrayList<Task>) tasks.stream().filter((t)->t.getDescription().toLowerCase().contains(args.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Task> filteredTasks = (ArrayList<Task>) tasks.stream().filter((t) -> t.getDescription().toLowerCase().contains(args.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
 
         String filteredData = "";
         Task[] filteredCopy = filteredTasks.toArray(Task[]::new);
@@ -31,6 +31,7 @@ public class Find implements Command {
             String task = data.getFormattedTask();
             filteredData += "\t" + ++counter + ". " + task + "\n";
         }
-        Ui.printFormattedReply(filteredCopy.length == 0 ? "No match found.\n" : "Here are the matching tasks in your list:\n" + filteredData);;
+        Ui.printFormattedReply(filteredCopy.length == 0 ? "No match found.\n" : "Here are the matching tasks in your list:\n" + filteredData);
+        ;
     }
 }

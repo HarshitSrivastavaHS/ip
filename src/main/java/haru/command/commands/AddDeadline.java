@@ -8,6 +8,7 @@ import haru.task.Todo;
 import haru.ui.Ui;
 import haru.util.Counter;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class AddDeadline implements Command {
@@ -32,9 +33,13 @@ public class AddDeadline implements Command {
             Ui.incorrectCommandUsage(SYNTAX);
         }
         String deadline = args.substring(delimiter + 3);
-        Deadline deadlineTask = new Deadline(description, deadline);
-        tasks.add(deadlineTask);
-        currentItemCount.value++;
-        Ui.printTaskAdd("Deadline", deadlineTask);
+        try {
+            Deadline deadlineTask = new Deadline(description.trim(), deadline);
+            tasks.add(deadlineTask);
+            currentItemCount.value++;
+            Ui.printTaskAdd("Deadline", deadlineTask);
+        } catch (DateTimeParseException e) {
+            Ui.printFormattedReply("Invalid date/time format. Use d/m/yyyy HHmm");
+        }
     }
 }
