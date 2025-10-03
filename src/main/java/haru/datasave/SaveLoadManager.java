@@ -50,19 +50,41 @@ public class SaveLoadManager {
         try {
             Scanner sc = new Scanner(saveFile);
             while (sc.hasNextLine()) {
-                String[] lineComponents = sc.nextLine().split("<\\|>");
-                switch (lineComponents[0]) {
-                case "T":
-                    tasks.add(new Todo(lineComponents[2], Boolean.parseBoolean(lineComponents[1])));
-                    break;
-                case "E":
-                    tasks.add(new Event(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3], lineComponents[4]));
-                    break;
-                case "D":
-                    tasks.add(new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]));
-                    break;
+                String line = sc.nextLine();
+                try {
+                    String[] lineComponents = line.split("<\\|>");
+                    if (lineComponents.length < 3) {
+                        System.out.println("Warning: Skipping malformed line: " + line);
+                        continue;
+                    }
+
+                    switch (lineComponents[0]) {
+                    case "T":
+                        tasks.add(new Todo(lineComponents[2], Boolean.parseBoolean(lineComponents[1])));
+                        break;
+                    case "E":
+                        if (lineComponents.length < 5) {
+                            System.out.println("Warning: Skipping malformed Event line: " + line);
+                            continue;
+                        }
+                        tasks.add(new Event(lineComponents[2], Boolean.parseBoolean(lineComponents[1]),
+                                lineComponents[3], lineComponents[4]));
+                        break;
+                    case "D":
+                        if (lineComponents.length < 4) {
+                            System.out.println("Warning: Skipping malformed Deadline line: " + line);
+                            continue;
+                        }
+                        tasks.add(new Deadline(lineComponents[2], Boolean.parseBoolean(lineComponents[1]), lineComponents[3]));
+                        break;
+                    default:
+                        System.out.println("Warning: Unknown task type: " + lineComponents[0]);
+                    }
+                    i++;
+                } catch (Exception e) {
+                    System.out.println("Warning: Could not parse line: " + line);
+                    e.printStackTrace();
                 }
-                i++;
             }
             return i;
         } catch (FileNotFoundException e) {
