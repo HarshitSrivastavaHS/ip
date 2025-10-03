@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 public class Delete implements Command {
 
+    private final String SYNTAX = "delete <list item number>";
     private final Parser parser;
     private final ArrayList<Task> tasks;
     private final Counter currentItemCount;
@@ -46,6 +47,9 @@ public class Delete implements Command {
      */
     @Override
     public void exec(String args) throws HaruException {
+        if (args.trim().isEmpty()) {
+            Ui.incorrectCommandUsage(SYNTAX);
+        }
         int index = parser.validateIndex(args, "Invalid List Item");
         if (index == -1) {
             return;

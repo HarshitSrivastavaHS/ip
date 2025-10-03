@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class Mark implements Command {
 
+    private final String SYNTAX = "mark <list item number>";
     private final Parser parser;
     private ArrayList<Task> tasks;
 
@@ -39,6 +40,9 @@ public class Mark implements Command {
      */
     @Override
     public void exec(String args) throws HaruException {
+        if (args.trim().isEmpty()) {
+            Ui.incorrectCommandUsage(SYNTAX);
+        }
         int index = parser.validateIndex(args, "Invalid List Item");
         if (index == -1) {
             return;
